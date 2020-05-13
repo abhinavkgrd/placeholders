@@ -3,14 +3,22 @@ var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
   first_name: { type: String, required: true },
-  last_name: { type: String}
-  // ,submissions: { type: Schema.Types.ObjectId, ref: "Solution" }
+  last_name: { type: String },
+  username: { type: String },
+  password: { type: String },
+  submissions: { type: Schema.Types.ObjectId, ref: "Submission" }
 });
 
-userSchema.virtual('username')
-.get(function(){
-    return String(first_name+'_'+last_name);
-});
+userSchema.virtual('display_name')
+  .get(function () {
+    return String(first_name + ' ' + last_name);
+  });
 
-module.exports = mongoose.model('User',userSchema);
+userSchema.virtual('url')
+  .get(function () {
+    return '/users/' + this._id;
+  });
+
+
+module.exports = mongoose.model('User', userSchema);
 

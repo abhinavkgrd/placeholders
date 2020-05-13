@@ -3,16 +3,11 @@ var router = express.Router();
 
 var submission_controller= require("../controllers/submissionController");
 
-router.get('/create',submission_controller.submission_create_get);
-router.post('/create',submission_controller.submission_create_post);
+router.get('/',submission_controller.submission_list);
 
-router.get('/:id/update',submission_controller.submission_update_get);
+router.get('/:sid/update',submission_controller.submission_update_get);
 
-router.get('/:id',submission_controller.submission_detail);
-
-router.get('/all',submission_controller.submission_list);
-
-
+router.get('/:sid',submission_controller.submission_detail);
 
 module.exports = router;
   

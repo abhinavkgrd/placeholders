@@ -2,22 +2,21 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var problemSchema = new Schema({
-  name: { type: String, required: true },
-  statement: { type: String, required: true },
-  testCase: {
-    type:[[String, String]],
-     minItems: 1
+  name: { type: String },
+  statement: { type: String },
+  sample_test_case: { input: String, output: String },
+  test_case: {
+    input: { type: Schema.Types.ObjectId, ref: 'Text' },
+    output: { type: Schema.Types.ObjectId, ref: 'Text' }
   },
+  submissions: [{ type: Schema.Types.ObjectId, ref: "Submission" }]
 });
 
-problemSchema.virtual("sample_case").get(function () {
-  return this.test_case.slice[1];
-});
 
 problemSchema
-.virtual('url')
-.get(function () {
-  return '/problems/' + this._id;
-});
+  .virtual('url')
+  .get(function () {
+    return '/problems/' + this._id;
+  });
 
 module.exports = mongoose.model("Problem", problemSchema);

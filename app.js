@@ -6,8 +6,8 @@ var logger = require('morgan');
 
 
 var problemsRouter = require('./routes/problems');
-var submissionsRouter = require('./routes/submissions');
 var usersRouter = require('./routes/users');
+var contestRouter = require('./routes/users');
 var problem_controller=require('./controllers/problemController');
 
 var app = express();
@@ -32,11 +32,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // ROUTES
 
-app.get('/',problem_controller.index);
+app.get('/',function(req,res){
+  res.render('index');
+});
 
 app.use('/problems', problemsRouter);
-app.use('/submissions', submissionsRouter);
 app.use('/users', usersRouter);
+app.use('/contests', usersRouter);
 
 
 // catch 404 and forward to error handler

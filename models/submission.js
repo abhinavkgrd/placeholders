@@ -3,18 +3,18 @@ var Schema = mongoose.Schema;
 
 
 var submissionSchema = new Schema({
-    problem:{type:Schema.Types.ObjectId, ref:'Problem', required:true},
-    user:{type:Schema.Types.ObjectId, ref:'User', required:true},
-    code :{type:String , required:true},
-    time:{type:Date , required:true},
-    status:{type:String ,required :true ,enum:['AC','WA','TLE','RE']}
+  timestamps: { createdAt: 'created_at' },
+  problem: { type: Schema.Types.ObjectId, ref: 'Problem' },
+  user: { type: Schema.Types.ObjectId, ref: 'User' },
+  code: { type: Schema.Types.ObjectId, ref: 'Text', required=true },
+  status: { type: String, enum: ['AC', 'WA', 'TLE', 'RE'] }
 });
 
 submissionSchema
-.virtual('url')
-.get(function () {
-  return '/submissions/' + this._id;
-});
+  .virtual('url')
+  .get(function () {
+    return '/submissions/' + this._id;
+  });
 
-module.exports= mongoose.model('Submission', submissionSchema);
+module.exports = mongoose.model('Submission', submissionSchema);
 

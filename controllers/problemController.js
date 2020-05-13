@@ -1,24 +1,9 @@
 var Problem = require('../models/problem');
-var User = require("../models/user");
-var Submission = require("../models/submission");
-var async=require("async");
-//index route
+var Text = require("../models/text");
 
-exports.index= function(req,res){
-    async.parallel({
-        problem_count: function(callback){
-            Problem.countDocuments({},callback);
-        }, 
-        user_count: function(callback){
-            User.countDocuments({},callback);
-        }, 
-        submission_count: function(callback){
-            Submission.countDocuments({},callback);
-        }
-    }, function (err,results) {
-            res.render('index',{title:'Site Home', error: err, data: results });
-    });
-}
+var async=require("async");
+
+
 // Display list of all Problems.
 exports.problem_list = function(req, res) {
     Problem.find({},'name')
@@ -31,8 +16,16 @@ exports.problem_list = function(req, res) {
 
 // Display detail page for a specific Problem.
 exports.problem_detail = function(req, res) {
-    res.send('NOT IMPLEMENTED: Problem detail: ' + req.params.id);
+    Problem.findOne({_id:req.params.pid})
+        .exec(function(err, problem){
+            if (err) { return next(err); }
+            //Successful, so render
+            res.render('problem_detail', { title: problem.name, problem: problem });
+          });
 };
+
+
+// Later
 
 // Display Problem create form on GET.
 exports.problem_create_get = function(req, res) {

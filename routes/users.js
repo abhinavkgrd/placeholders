@@ -3,19 +3,20 @@ var router = express.Router();
 
 var user_controller= require("../controllers/userController");
 
+router.get('/',user_controller.user_list);
+
+
 router.get('/create',user_controller.user_create_get);
 router.post('/create',user_controller.user_create_post);
 
-router.get('/:id/update',user_controller.user_update_get);
+router.get('/:uid/submissions',user_controller.user_submission_list);
 
-router.get('/:id/delete',user_controller.user_delete_get);
-router.post('/:id/delete',user_controller.user_delete_post);
+router.get('/:uid/update',user_controller.user_update_get);
+router.post('/:uid/update',user_controller.user_update_post);
 
-router.get('/:id',user_controller.user_detail);
+router.get('/:uid/delete',user_controller.user_delete_get);
 
-router.get('/all',user_controller.user_list);
-
-
+router.get('/:uid',user_controller.user_detail);
 
 module.exports = router;
   
