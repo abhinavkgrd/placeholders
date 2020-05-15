@@ -4,21 +4,19 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-
 var problemsRouter = require('./routes/problems');
 var usersRouter = require('./routes/users');
-var contestRouter = require('./routes/users');
-var problem_controller=require('./controllers/problemController');
+var contestsRouter = require('./routes/users');
 
 var app = express();
 
 
-var mongoose = require('mongoose');
+// var mongoose = require('mongoose');
 
-var mongoDB = 'mongodb+srv://dbuser:strongPass@cluster0-jn6qi.mongodb.net/Codeforces_clone_db?retryWrites=true&w=majority';
-mongoose.connect(mongoDB, { useNewUrlParser: true });
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+// var mongoDB = 'mongodb+srv://dbuser:strongPass@cluster0-jn6qi.mongodb.net/Codeforces_clone_db?retryWrites=true&w=majority';
+// mongoose.connect(mongoDB, { useNewUrlParser: true });
+// var db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -29,7 +27,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+// app.use('/img',express.static(path.join(__dirname, 'public/images')));
 // ROUTES
 
 app.get('/',function(req,res){
@@ -38,7 +36,7 @@ app.get('/',function(req,res){
 
 app.use('/problems', problemsRouter);
 app.use('/users', usersRouter);
-app.use('/contests', usersRouter);
+app.use('/contests', contestsRouter);
 
 
 // catch 404 and forward to error handler
