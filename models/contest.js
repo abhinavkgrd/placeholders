@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 
 var contestSchema = new Schema({
     problems: [{ type: Schema.Types.ObjectId, ref: "Problem" }],
-    users: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    users: [{details:{ type: Schema.Types.ObjectId, ref: "User" },score:{type:Number}}],
     start_time: Date,
     duration: Number
 });
