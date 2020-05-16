@@ -5,8 +5,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var problemsRouter = require('./routes/problems');
+var submissionsRouter = require('./routes/submissions');
 var usersRouter = require('./routes/users');
-var contestsRouter = require('./routes/users');
+var contestsRouter = require('./routes/contests');
 
 var app = express();
 
@@ -35,6 +36,7 @@ app.get('/',function(req,res){
 });
 
 app.use('/problems', problemsRouter);
+app.use('/submissions', submissionsRouter);
 app.use('/users', usersRouter);
 app.use('/contests', contestsRouter);
 
