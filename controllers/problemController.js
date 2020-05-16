@@ -17,7 +17,7 @@ exports.problem_list = function (req, res) {
 // Display detail page for a specific Problem.
 exports.problem_detail = function (req, res, next) {
     Problem.findOne({ _id: req.params.pid })
-        .select('name statement sample_test_case')
+
         .exec(function (err, problem) {
             if (err) { console.log(err); }
             //Successful, so render

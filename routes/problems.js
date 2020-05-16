@@ -11,22 +11,17 @@ var submission_controller= require("../controllers/submissionController");
 
 router.get('/',problem_controller.problem_list);
 
-router.get('/submit',submission_controller.submission_create_get);
-router.post('/submit',submission_controller.submission_create_post);
-
-
 
 router.get('/create',problem_controller.problem_create_get);
 router.post('/create',problem_controller.problem_create_post);
 
 
 //submissions Related routes
-router.use('/:pid/submissions', submissionsRouter);
 
-
+router.get('/:pid/submit',submission_controller.submission_create_get);
+router.get('/:pid/submissions',submission_controller.submission_create_get);
 
 // For Problem Setter
-
 
 router.get('/:pid/update',problem_controller.problem_update_get);
 router.post('/:pid/update',problem_controller.problem_update_post);
