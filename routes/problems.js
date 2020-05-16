@@ -32,7 +32,6 @@ router.get('/:pid/update',problem_controller.problem_update_get);
 router.post('/:pid/update',problem_controller.problem_update_post);
 
 router.get('/:pid/delete',problem_controller.problem_delete_get);
-router.post('/:pid/delete',problem_controller.problem_delete_post);
 
 
 
