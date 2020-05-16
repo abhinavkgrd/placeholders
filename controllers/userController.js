@@ -2,13 +2,22 @@ var User = require('../models/user');
 
 // Display list of all Users.
 exports.user_list = function(req, res) {
-    res.send('NOT IMPLEMENTED: User list');
-};
+        User.find({}, 'first_name', function (err, list_of_problems) {
+            if (err) { console.log(err); }
+            //Successful, so render
+            res.send(list_of_problems);
+        });
+    };
 
 
 // Display detail page for a specific User.
 exports.user_detail = function(req, res) {
-    res.send('NOT IMPLEMENTED: User detail: ' + req.params.id);
+    User.findOne({ _id: req.params.uid })
+    .exec(function (err, user) {
+        if (err) { console.log(err); }
+        //Successful, so render
+        res.send(user);
+    });
 };
 
 exports.user_submission_list = function(req, res) {
@@ -21,7 +30,19 @@ exports.user_create_get = function(req, res) {
 
 // Handle User create on POST.
 exports.user_create_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: User create POST');
+    var user={
+        first_name:req.body.fname,
+        last_name:req.body.lname,
+        username:req.body.uname,
+        password:req.body.pass,
+    }
+    User.create(user,function(err,user){
+        if(err){
+            console.log(err);
+            return ;
+        }
+        res.redirect(user.url);
+    })
 };
 
 // Display User delete form on GET.

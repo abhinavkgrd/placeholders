@@ -6,7 +6,7 @@ var userSchema = new Schema({
   last_name: { type: String },
   username: { type: String },
   password: { type: String },
-  submissions: { type: Schema.Types.ObjectId, ref: "Submission" }
+  submissions: [{ type: Schema.Types.ObjectId, ref: "Submission" }]
 });
 
 userSchema.virtual('display_name')
