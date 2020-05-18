@@ -2,10 +2,11 @@ const Submission = require('../models/submission');
 const Problem = require('../models/problem');
 const User = require('../models/user');
 const upload = require("../configs/multerConfig");
+const ips= require("../configs/IPConfig");
 var helper = require("./helper");
 var fs = require("fs");
-var path = require('path');
-var async= require("async");
+var async = require("async");
+var axios = require('axios')
 
 
 // Display list of all Submissions.
@@ -57,29 +58,30 @@ exports.submission_create_post = [
                 mimetype: 'text/cpp'
             }
         }
-        console.log(file);
+
         helper.createtext(file).then((codeid) => {
             var submission = {
                 problem: req.body.pid,
                 user: req.body.uid,
                 code: codeid,
-                status: 'AC'
+                status: 'PENDING'
             };
             Submission.create(submission, function (err, submission) {
                 if (err) {
                     console.log(err);
                     return;
                 }
+                judge_solution(codeid, req.body.pid, submission._id);
                 async.parallel([
                     (callback) => {
-                        Problem.updateOne({_id:req.body.pid}, { $push: { submissions: [submission._id] } }, function (err,problem) {
+                        Problem.updateOne({ _id: req.body.pid }, { $push: { submissions: [submission._id] } }, function (err, problem) {
                             if (err)
                                 return callback(err);
                             callback(null);
                         });
                     },
                     (callback) => {
-                        User.updateOne({_id:req.body.uid}, { $push: { submissions: [submission._id] } }, function (err,user) {
+                        User.updateOne({ _id: req.body.uid }, { $push: { submissions: [submission._id] } }, function (err, user) {
                             if (err)
                                 return callback(err);
                             callback(null);
@@ -97,13 +99,30 @@ exports.submission_create_post = [
     }];
 
 // Display Submission update form on GET.
-exports.submission_update_get = function (req, res) {
-    res.send('NOT IMPLEMENTED: Submission update: ' + req.params.pid + req.params.sid);
-
+exports.submission_update_post = function (req, res) {
+    // console.log(req.body.status);
+     Submission.updateOne({ _id: req.params.sid }, { $set: { status: req.body.status } }, (err) => {
+        if(err)
+            return res.send(err);
+        res.send("updated");
+    });
 };
 
-
-
-/*
-
-*/
+function judge_solution(codeid, pid, sid) {
+    Problem.findById(pid).then((problem) => {
+        var reqbody = {
+            codeid: codeid,
+            inpid: problem.test_case.input,
+            outid: problem.test_case.output
+        };
+        // console.log(reqbody);
+        axios.post(ips.coderunner+'/judge', reqbody).then((res) => {
+            axios.post(ips.self+'/submissions/' + sid + '/update', { status: res.data }).then((res) => {
+                console.log(res.data);
+            });
+        })
+            .catch((err) => {
+                console.error("judging server error");
+            });
+    });
+}

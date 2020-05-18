@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 
-const textSchema = mongoose.Schema({
+const textSchema =new Schema({
     type: String,
     data: Buffer
 });
