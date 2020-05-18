@@ -17,12 +17,6 @@ exports.submission_list = function (req, res) {
     });
 };
 
-exports.contest_submission_list = function (req, res) {
-    res.send('NOT IMPLEMENTED: Submission list: ' + req.params.cid);
-};
-exports.user_contest_submission_list = function (req, res) {
-    res.send('NOT IMPLEMENTED: Submission list: ' + req.params.cid + ' ' + req.params.uid);
-};
 
 // Display detail page for a specific Submission.
 exports.submission_detail = function (req, res) {
