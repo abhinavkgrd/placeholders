@@ -19,7 +19,7 @@ router.post('/create',problem_controller.problem_create_post);
 //submissions Related routes
 
 router.get('/:pid/submit',submission_controller.submission_create_get);
-router.get('/:pid/submissions',submission_controller.submission_create_get);
+router.get('/:pid/submissions',problem_controller.problem_submission_list);
 
 // For Problem Setter
 

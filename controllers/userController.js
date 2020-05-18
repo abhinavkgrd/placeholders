@@ -2,10 +2,10 @@ var User = require('../models/user');
 
 // Display list of all Users.
 exports.user_list = function(req, res) {
-        User.find({}, 'first_name', function (err, list_of_problems) {
+        User.find({}, 'first_name', function (err, userlist) {
             if (err) { console.log(err); }
             //Successful, so render
-            res.send(list_of_problems);
+            res.send(userlist);
         });
     };
 
@@ -20,8 +20,18 @@ exports.user_detail = function(req, res) {
     });
 };
 
-exports.user_submission_list = function(req, res) {
-    res.send('NOT IMPLEMENTED: User list');
+exports.user_submission_list = function (req, res) {
+    User.findOne({ _id: req.params.uid })
+    .populate({
+        path:'submissions',
+        populate:{ path: 'problem', select: 'name' },
+        populate:{ path: 'user', select: 'username' }
+    })
+    .exec((err,user)=> {
+        if (err) { console.log(err); }
+        //Successful, so render
+        res.send(user.submissions);
+    });
 };
 // Display User create form on GET.
 exports.user_create_get = function(req, res) {

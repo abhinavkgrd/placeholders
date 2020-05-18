@@ -1,4 +1,5 @@
 const Problem = require('../models/problem');
+const Submission = require('../models/submission');
 const upload = require("../configs/multerConfig");
 const helper = require("./helper");
 // const { body,validationResult } = require('express-validator/check');
@@ -16,13 +17,25 @@ exports.problem_list = function (req, res) {
 
 // Display detail page for a specific Problem.
 exports.problem_detail = function (req, res, next) {
-    Problem.findOne({ _id: req.params.pid })
-
-        .exec(function (err, problem) {
+    Problem.findOne({ _id: req.params.pid },(err,problem)=> {
             if (err) { console.log(err); }
             //Successful, so render
             res.send(problem);
         });
+};
+
+exports.problem_submission_list = function (req, res) {
+    Problem.findOne({ _id: req.params.pid })
+    .populate({
+        path:'submissions',
+        populate:{ path: 'problem', select: 'name' },
+        populate:{ path: 'user', select: 'username' }
+    })
+    .exec((err,problem)=> {
+        if (err) { console.log(err); }
+        //Successful, so render
+        res.send(problem.submissions);
+    });
 };
 
 // Display Problem create form on GET.
@@ -76,6 +89,7 @@ function savetext(file, callback) {
         callback(null, id);
     })
 }
+
 
 // Later
 

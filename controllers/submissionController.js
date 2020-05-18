@@ -2,7 +2,7 @@ const Submission = require('../models/submission');
 const Problem = require('../models/problem');
 const User = require('../models/user');
 const upload = require("../configs/multerConfig");
-const ips= require("../configs/IPConfig");
+const ips = require("../configs/IPConfig");
 var helper = require("./helper");
 var fs = require("fs");
 var async = require("async");
@@ -10,27 +10,27 @@ var axios = require('axios')
 
 
 // Display list of all Submissions.
+
 exports.submission_list = function (req, res) {
-    res.send('NOT IMPLEMENTED: Submission detail: ');
+    helper.submission_listview(Submission.find({})).then((submission) => {
+        res.send(submission);
+    });
 };
-exports.user_submission_list = function (req, res) {
-    res.send('NOT IMPLEMENTED: Submission detail: ' + req.params.uid);
-};
+
 exports.contest_submission_list = function (req, res) {
-    res.send('NOT IMPLEMENTED: Submission detail: ' + req.params.cid);
+    res.send('NOT IMPLEMENTED: Submission list: ' + req.params.cid);
 };
 exports.user_contest_submission_list = function (req, res) {
-    res.send('NOT IMPLEMENTED: Submission detail: ' + req.params.cid + ' ' + req.params.uid);
+    res.send('NOT IMPLEMENTED: Submission list: ' + req.params.cid + ' ' + req.params.uid);
 };
 
 // Display detail page for a specific Submission.
 exports.submission_detail = function (req, res) {
-    Submission.findOne({ _id: req.params.sid })
-        .exec(function (err, submission) {
-            if (err) { console.log(err); }
-            //Successful, so render
-            res.send(submission);
-        });
+    Submission.findOne({ _id: req.params.sid }, (err, submission) => {
+        if (err) { console.log(err); }
+        //Successful, so render
+        res.send(submission);
+    });
 };
 
 // Display Submission create form on GET.
@@ -101,8 +101,8 @@ exports.submission_create_post = [
 // Display Submission update form on GET.
 exports.submission_update_post = function (req, res) {
     // console.log(req.body.status);
-     Submission.updateOne({ _id: req.params.sid }, { $set: { status: req.body.status } }, (err) => {
-        if(err)
+    Submission.updateOne({ _id: req.params.sid }, { $set: { status: req.body.status } }, (err) => {
+        if (err)
             return res.send(err);
         res.send("updated");
     });
@@ -116,8 +116,8 @@ function judge_solution(codeid, pid, sid) {
             outid: problem.test_case.output
         };
         // console.log(reqbody);
-        axios.post(ips.coderunner+'/judge', reqbody).then((res) => {
-            axios.post(ips.self+'/submissions/' + sid + '/update', { status: res.data }).then((res) => {
+        axios.post(ips.coderunner + '/judge', reqbody).then((res) => {
+            axios.post(ips.self + '/submissions/' + sid + '/update', { status: res.data }).then((res) => {
                 console.log(res.data);
             });
         })
