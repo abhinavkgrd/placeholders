@@ -8,10 +8,10 @@ var async = require("async");
 
 // Display list of all Problems.
 exports.problem_list = function (req, res) {
-    Problem.find({}, 'name', function (err, list_of_problems) {
+    Problem.find({}, 'name', function (err, problems_list) {
         if (err) { console.log(err); }
         //Successful, so render
-        res.send(list_of_problems);
+        res.send(problems_list);
     });
 };
 
@@ -22,20 +22,6 @@ exports.problem_detail = function (req, res, next) {
             //Successful, so render
             res.send(problem);
         });
-};
-
-exports.problem_submission_list = function (req, res) {
-    Problem.findOne({ _id: req.params.pid })
-    .populate({
-        path:'submissions',
-        populate:{ path: 'problem', select: 'name' },
-        populate:{ path: 'user', select: 'username' }
-    })
-    .exec((err,problem)=> {
-        if (err) { console.log(err); }
-        //Successful, so render
-        res.send(problem.submissions);
-    });
 };
 
 // Display Problem create form on GET.

@@ -5,7 +5,8 @@ var Schema = mongoose.Schema;
 var contestSchema = new Schema({
     name: {type:String},
     problems: [{ type: Schema.Types.ObjectId, ref: "Problem" }],
-    users: [{ details: { type: Schema.Types.ObjectId, ref: "User" }, score: { type: Number } }],
+    submissions: [{ type: Schema.Types.ObjectId, ref: "Submission" }],
+    users: [{ details: { type: Schema.Types.ObjectId, ref: "User" }, AC_problems: { type: Schema.Types.ObjectId, ref: "Problem" }}],
     start_time: Date,
     end_time: Date
 });

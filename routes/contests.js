@@ -18,19 +18,22 @@ router.get("/:cid/submissions",contest_controller.contest_submission_list);
 router.get("/:cid/problems",contest_controller.contest_problem_list);
 
 
-//user registration
-router.post("/:cid/register/:uid",contest_controller.contest_user_register);
+//submissions Problem routes
+router.get('/:cid/problems/:pid/submit',submission_controller.submission_create_get);
+router.get('/:cid/problems/:pid/submissions',contest_controller.problem_contest_submission_list);
+
 
 //add/update problems in the contest
-router.get("/:cid/update/problems",contest_controller.contest_problem_update_get);
-router.post("/:cid/update/problems",contest_controller.contest_problem_update_post);
+router.get("/:cid/problems/update",contest_controller.contest_problem_update_get);
+router.post("/:cid/problems/update",contest_controller.contest_problem_update_post);
 
 
-router.get("/:cid/submissions/:uid/",contest_controller.user_contest_submission_list);
+//user routes
+router.post("/:cid/register/",contest_controller.contest_user_register);
+
+router.get("/:cid/users/:uid/submissions",contest_controller.user_contest_submission_list);
 
 router.get("/:cid",contest_controller.contest_details);
-
-
 
 module.exports=router;
 

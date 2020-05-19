@@ -7,7 +7,7 @@ var submissionSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User' },
   code: { type: Schema.Types.ObjectId, ref: 'Text', require:true },
   status: { type: String, enum: ['AC', 'WA', 'TLE', 'RE','PENDING'] }
-}, { timestamps: { createdAt: 'created_at' }});
+}, { timestamps: true});
 
 submissionSchema
   .virtual('url')

@@ -8,8 +8,7 @@ var problemSchema = new Schema({
   test_case: {
     input: { type: Schema.Types.ObjectId, ref: 'Text' },
     output: { type: Schema.Types.ObjectId, ref: 'Text' }
-  },
-  submissions: [{ type: Schema.Types.ObjectId, ref: "Submission" }]
+  }
 });
 
 

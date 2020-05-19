@@ -1,5 +1,6 @@
 const Submission = require('../models/submission');
 const Problem = require('../models/problem');
+const Contest = require('../models/contest');
 const User = require('../models/user');
 const upload = require("../configs/multerConfig");
 const ips = require("../configs/IPConfig");
@@ -12,9 +13,7 @@ var axios = require('axios')
 // Display list of all Submissions.
 
 exports.submission_list = function (req, res) {
-    helper.submission_listview(Submission.find({})).then((submission) => {
-        res.send(submission);
-    });
+   res.send("do you need this route...think about it");
 };
 
 
@@ -68,7 +67,7 @@ exports.submission_create_post = [
                 judge_solution(codeid, req.body.pid, submission._id);
                 async.parallel([
                     (callback) => {
-                        Problem.updateOne({ _id: req.body.pid }, { $push: { submissions: [submission._id] } }, function (err, problem) {
+                        Contest.updateOne({ _id: req.body.cid }, { $push: { submissions: [submission._id] } }, function (err, problem) {
                             if (err)
                                 return callback(err);
                             callback(null);
