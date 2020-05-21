@@ -1,6 +1,6 @@
 var Contest = require('../models/contest');
 var helper = require("./helper");
-const upload = require("../configs/multerConfig");
+const upload = require("../configs/multer");
 
 
 exports.contest_list = function (req, res) {

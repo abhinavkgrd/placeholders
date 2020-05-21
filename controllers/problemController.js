@@ -1,6 +1,6 @@
 const Problem = require('../models/problem');
 const Submission = require('../models/submission');
-const upload = require("../configs/multerConfig");
+const upload = require("../configs/multer");
 const helper = require("./helper");
 // const { body,validationResult } = require('express-validator/check');
 // const { sanitizeBody } = require('express-validator/filter');
