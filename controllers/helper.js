@@ -27,3 +27,11 @@ exports.submission_listview = function (cid) {
     });
     return query.exec();
 };
+
+exports.loggedIn =(req, res, next)=> {
+    if (req.user) {
+        next();
+    } else {
+        res.redirect('/users/login');
+    }
+};

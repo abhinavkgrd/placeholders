@@ -3,11 +3,15 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var passport = require('./configs/passport');
+
 
 var problemsRouter = require('./routes/problems');
 var submissionsRouter = require('./routes/submissions');
 var usersRouter = require('./routes/users');
 var contestsRouter = require('./routes/contests');
+
+
 const InitiateMongoServer = require("./configs/db");
 
 var app = express();
@@ -25,9 +29,23 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 // app.use('/img',express.static(path.join(__dirname, 'public/images')));
+
+
+// Authentication
+
+const expressSession = require('express-session')({
+  secret: 'secret',
+  resave: false,
+  saveUninitialized: false
+});
+app.use(expressSession);
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 // ROUTES
 
-app.get('/',function(req,res){
+app.get('/', function (req, res) {
   res.render('index');
 });
 
@@ -38,12 +56,12 @@ app.use('/contests', contestsRouter);
 
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

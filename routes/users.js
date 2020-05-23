@@ -6,8 +6,13 @@ var user_controller= require("../controllers/userController");
 router.get('/',user_controller.user_list);
 
 
-router.get('/create',user_controller.user_create_get);
-router.post('/create',user_controller.user_create_post);
+router.get('/signup',user_controller.user_create_get);
+router.post('/signup',user_controller.user_create_post);
+
+router.get('/login',user_controller.user_login_get);
+router.post('/login',user_controller.user_login_post);
+
+router.post('/logout',user_controller.user_logout_post);
 
 router.get('/:uid/submissions',user_controller.user_submission_list);
 
