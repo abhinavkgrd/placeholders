@@ -4,7 +4,7 @@ const Contest = require('../models/contest');
 const User = require('../models/user');
 const upload = require("../configs/multer");
 const ips = require("../configs/IP");
-var helper = require("./helper");
+const {createtext} = require("./helper");
 var fs = require("fs");
 var async = require("async");
 var axios = require('axios')
@@ -52,7 +52,7 @@ exports.submission_create_post = [
             }
         }
 
-        helper.createtext(file).then((codeid) => {
+        createtext(file).then((codeid) => {
             var submission = {
                 problem: req.body.pid,
                 user: req.body.uid,

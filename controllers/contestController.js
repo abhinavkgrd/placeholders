@@ -1,5 +1,5 @@
 var Contest = require('../models/contest');
-var helper = require("./helper");
+var {submission_listview} = require("./helper");
 const upload = require("../configs/multer");
 
 
@@ -32,13 +32,13 @@ exports.leaderboard = function (req, res) {
 };
 
 exports.contest_submission_list = function (req, res) {
-    helper.submission_listview(req.params.cid).then((contest) => {
+    submission_listview(req.params.cid).then((contest) => {
         res.send(contest.submissions);
     });
 };
 
 exports.user_contest_submission_list = function (req, res) {
-    helper.submission_listview(req.params.cid).then((contest) => {
+    submission_listview(req.params.cid).then((contest) => {
         var userSubmissions = [];
         contest.submissions.forEach(submission => {
             if (submission.user._id == req.params.uid)
@@ -49,7 +49,7 @@ exports.user_contest_submission_list = function (req, res) {
 };
 
 exports.problem_contest_submission_list = function (req, res) {
-    helper.submission_listview(req.params.cid).then((contest) => {
+    submission_listview(req.params.cid).then((contest) => {
         var problemSubmissions = [];
         contest.submissions.forEach(submission => {
             if (submission.problem._id == req.params.pid)

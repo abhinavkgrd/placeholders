@@ -1,10 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-var submissionsRouter = require('./submissions');
 
 var problem_controller= require("../controllers/problemController");
-var submission_controller= require("../controllers/submissionController");
 
 
 // PROBLEM ROUTES
