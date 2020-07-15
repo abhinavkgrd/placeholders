@@ -1,7 +1,7 @@
 const Problem = require('../models/problem');
 const Submission = require('../models/submission');
 const upload = require("../configs/multer");
-const helper = require("./helper");
+const {createtext} = require("./helper");
 // const { body,validationResult } = require('express-validator/check');
 // const { sanitizeBody } = require('express-validator/filter');
 var async = require("async");
@@ -46,7 +46,7 @@ exports.problem_create_post = [
             input: savetext.bind(null, files.input_file[0]),
             output: savetext.bind(null, files.output_file[0])
         }, function (err, test_case) {
-            console.log(test_case);
+            // console.log(test_case);
             if (err) {
                 console.log(err);
                 return;
@@ -71,7 +71,7 @@ exports.problem_create_post = [
 ]
 
 function savetext(file, callback) {
-    helper.createtext(file).then((id) => {
+    createtext(file).then((id) => {
         callback(null, id);
     })
 }
