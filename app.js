@@ -46,7 +46,7 @@ app.use(passport.session());
 // ROUTES
 
 app.get('/', function (req, res) {
-  res.render('index');
+  res.render('layout',{content:'index'});
 });
 
 app.use('/problems', problemsRouter);
