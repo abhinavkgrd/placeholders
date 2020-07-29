@@ -1,6 +1,6 @@
 const Text = require("../models/text");
 const fs = require("fs");
-var Contest =require('../models/contest');
+var Contest = require('../models/contest');
 
 exports.createtext = async (file) => {
     var id = await Text.create({
@@ -19,16 +19,15 @@ exports.createtext = async (file) => {
 }
 
 exports.submission_listview = function (cid) {
-    var query=Contest.findOne({ _id: cid })
-    .populate({
-        path:'submissions',
-        populate:[{ path: 'problem', select: 'name' }
-         ,{ path: 'user', select: 'username' }]
-    });
+    var query = Contest.findOne({ _id: cid })
+        .populate([{ path: 'problems', select: 'name' }, {
+            path: 'submissions',
+            populate: [{ path: 'problem', select: 'name' }
+                , { path: 'user', select: 'username' }]
+        }]);
     return query.exec();
 };
-
-exports.loggedIn =(req, res, next)=> {
+exports.loggedIn = (req, res, next) => {
     if (req.user) {
         next();
     } else {
