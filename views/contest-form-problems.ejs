@@ -1,12 +1,23 @@
-git <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contest Create form</title>
-</head>
-<body>
-    <h1>Contest Create form not written</h1>
-    </form>
-</body>
-</html>
+<h2>
+    Add Problems to Contest
+</h2>
+<hr>
+<form action="/contests/<%=contestid%>/problems/update" method="POST" enctype="multipart/form-data">
+    <div class="problems">
+        <div class="form-group">
+            <label for="formGroupExampleInput">Problem Id</label>
+            <input type="text" class="form-control" id="formGroupExampleInput" name="problems[]"
+                placeholder="Problem id 1" required>
+        </div>
+    </div>
+    <button type="button" onclick="addinput()">+</button>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-2">Submit</button>
+    </div>
+</form>
+<script>
+    var i=2;
+    function addinput() {
+        $("div.problems").append(`<div class="form-group"><input type="text" class="form-control" id="formGroupExampleInput" name="problems[]" placeholder="Problem id ${i++}" required></div>`);
+    }
+</script>

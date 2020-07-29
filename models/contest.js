@@ -29,7 +29,7 @@ contestSchema
         if (Date.now() < this.start_time)
             return "Upcoming";
         else if (Date.now() >= this.start_time && Date.now() < this.end_time)
-            return "active";
+            return "Active";
         else
             return "Ended";
     });
