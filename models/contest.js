@@ -36,4 +36,3 @@ contestSchema
 
 module.exports = mongoose.model('Contest', contestSchema);
 
-

@@ -15,5 +15,10 @@ submissionSchema
     return '/submissions/' + this._id;
   });
 
+  submissionSchema
+  .virtual('short_id')
+  .get(function () {
+      return String(this._id).slice(-5);
+  });
 module.exports = mongoose.model('Submission', submissionSchema);
 

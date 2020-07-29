@@ -7,7 +7,8 @@ exports.user_list = function (req, res) {
     User.find({}, function (err, userlist) {
         if (err) { console.log(err); }
         //Successful, so render
-        res.send(userlist);
+        //  res.send(userlist);
+          res.render('layout',{content:'ranking' , users:userlist});
     });
 };
 

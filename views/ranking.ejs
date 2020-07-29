@@ -1,0 +1,22 @@
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Handle</th>
+      <th scope="col">Name</th>
+      <th scope="col">Submissions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% var i =1 %>
+    <% users.forEach(function(user){ %>
+    <tr>
+      <th scope="row"><%=i %></th>
+      <td><a href="<%=user.url%>"><%=user.username %></a></td>
+      <td><%=user.firstname %></td>
+      <td><%=user.submissions.length %></td>  
+    </tr>
+    <% i++;%>
+    <%});%>
+  </tbody>
+</table>

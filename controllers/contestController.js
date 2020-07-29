@@ -1,5 +1,5 @@
 var Contest = require('../models/contest');
-var {submission_listview} = require("./helper");
+var { submission_listview } = require("./helper");
 const upload = require("../configs/multer");
 
 
@@ -7,55 +7,58 @@ exports.contest_list = function (req, res) {
     Contest.find({}, function (err, contests) {
         if (err) { console.log(err); }
         //Successful, so render
-        res.send(contests);
+        res.render('layout', { content: 'contest_list', list: contests });
     });
 };
 
 exports.contest_details = function (req, res) {
-    Contest.find({ _id: req.params.cid }, function (err, contest) {
-        if (err) { console.log(err); }
-        //Successful, so render
-        res.send(contest);
+    submission_listview(req.params.cid).then((contest) => {
+        console.log(contest);
+        var problemSubmissioncnt= {};
+        contest.problems.forEach((problem) => {
+            problemSubmissioncnt[problem._id]=0;
+        });
+        contest.submissions.forEach((submission) => {
+            // console.log(submission);
+            problemSubmissioncnt[submission.problem._id]+=1;;
+        });
+        res.render('layout', { content: 'contest', contest: contest ,subcnt :problemSubmissioncnt});
     });
 };
 
-exports.contest_problem_list = function (req, res) {
-    Contest.findOne({ _id: req.params.cid })
-        .populate({ path: 'problems', select: 'name' }).
-        exec().then((contest) => {
-            res.send(contest.problems);
-        });
-};
-
 exports.leaderboard = function (req, res) {
-    res.send('NOT IMPLEMENTED: leaderboard');
+    Contest.findOne({ _id: req.params.cid })
+        .populate('user').exec()
+    .then((contest)=>{
+        res.render('layout', { content: 'leaderboard', contest: contest});
+    });
 };
 
 exports.contest_submission_list = function (req, res) {
     submission_listview(req.params.cid).then((contest) => {
-        res.send(contest.submissions);
+        res.render('layout', { content: 'submission_list', contest: contest ,submissions:contest.submissions});
     });
 };
 
 exports.user_contest_submission_list = function (req, res) {
     submission_listview(req.params.cid).then((contest) => {
         var userSubmissions = [];
-        contest.submissions.forEach(submission => {
+        contest.submissions.forEach((submission) => {
             if (submission.user._id == req.params.uid)
-            userSubmissions.push(submission);
+                userSubmissions.push(submission);
         });
-        res.send(userSubmissions);
+        res.render('layout', { content: 'submission_list', contest: contest,submissions:userSubmissions});
     });
 };
 
 exports.problem_contest_submission_list = function (req, res) {
     submission_listview(req.params.cid).then((contest) => {
         var problemSubmissions = [];
-        contest.submissions.forEach(submission => {
+        contest.submissions.forEach((submission) => {
             if (submission.problem._id == req.params.pid)
                 problemSubmissions.push(submission);
         });
-        res.send(problemSubmissions);
+        res.render('layout', { content: 'submission_list', contest: contest,submissions:problemSubmissions});
     });
 };
 
@@ -72,7 +75,7 @@ exports.contest_create_post = function (req, res) {
     }
     Contest.create(contest, function (err, contest) {
         if (err) { console.log(err); return; }
-        res.redirect(contest.url + '/update/problems');
+        res.redirect(contest.url + '/problems/update');
     });
 };
 
@@ -83,7 +86,6 @@ exports.contest_problem_update_get = function (req, res) {
 
 exports.contest_problem_update_post = [upload.any(), function (req, res) {
     var problems_list = req.body.problems;
-    // console.log(problems_list); 
     var update = { $push: { problems: { $each: problems_list } } };
     var options = { new: true, useFindAndModify: false };
     Contest.findByIdAndUpdate(req.params.cid, update, options, function (err, contest) {
