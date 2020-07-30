@@ -1,18 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="/submit" method="POST">
-        <input type="text" value="<%=pid%>" readonly>
-        <div>
-            <textarea name="code" cols="100" rows="40"></textarea>
-        </div>
-        <input type="submit" value="Submit" class="submitButton">
-        </textarea>
-    </form>
-</body>
-</html>
+<%- include('partials/contest-header' , {contest:contest});  -%>
+<form class="form-group" action="submissions/submit" method="POST">
+  <input type="hidden" name="cid" value="<%=contest._id%>">
+  <div class="form-group">
+    <label for="Problemselect">Problem Name</label>
+    <select class="form-control" id="Problemselect" name="pid">
+      <%contest.problems.forEach(function(problem){%>
+      <option value="<%=problem._id%>"><%=problem.name%></option>
+      <%})%>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="sourcefile">Upload Source code file</label>
+    <input type="file" class="form-control-file" id="sourcefile">
+  </div>
+  <div class="form-group">
+    <label for="code">Source Code</label>
+    <textarea class="form-control" name="code" id="code" rows="20"></textarea>
+  </div>
+  <input type="submit" class="btn btn-primary" value="Submit" class="submitButton">
+  </textarea>
+</form>

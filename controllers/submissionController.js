@@ -10,12 +10,6 @@ var async = require("async");
 var axios = require('axios')
 
 
-// Display list of all Submissions.
-
-exports.submission_list = function (req, res) {
-   res.send("do you need this route...think about it");
-};
-
 
 // Display detail page for a specific Submission.
 exports.submission_detail = function (req, res) {
@@ -24,11 +18,6 @@ exports.submission_detail = function (req, res) {
         //Successful, so render
         res.send(submission);
     });
-};
-
-// Display Submission create form on GET.
-exports.submission_create_get = function (req, res) {
-    res.render("submit-form", { pid: req.params.id });
 };
 
 // Handle Submission create on POST.

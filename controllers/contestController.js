@@ -27,11 +27,21 @@ exports.contest_details = function (req, res) {
 
 exports.leaderboard = function (req, res) {
     Contest.findOne({ _id: req.params.cid })
-        .populate('user').exec()
+        .populate('users').exec()
         .then((contest) => {
             res.render('layout', { content: 'leaderboard', contest: contest });
         });
 };
+
+// Display Submission create form on GET.
+exports.submission_create_get = function (req, res) {
+    Contest.findOne({ _id: req.params.cid })
+    .populate({path:'problems',select:"name"}).exec()
+        .then((contest) => {
+            res.render('layout', { content: 'submit-form', contest: contest });
+        });
+};
+
 
 exports.contest_submission_list = function (req, res) {
     submission_listview(req.params.cid).then((contest) => {

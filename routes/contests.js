@@ -17,7 +17,7 @@ router.get("/:cid/submissions",contest_controller.contest_submission_list);
 
 
 //submissions Problem routes
-router.get('/:cid/problems/:pid/submit',submission_controller.submission_create_get);
+router.get('/:cid/problems/:pid/submit',contest_controller.submission_create_get);
 router.get('/:cid/problems/:pid/submissions',contest_controller.problem_contest_submission_list);
 
 
