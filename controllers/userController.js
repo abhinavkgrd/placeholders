@@ -1,6 +1,6 @@
 var User = require('../models/user');
 var passport = require('passport');
-const {loggedIn}  = require('./helper');
+const { loggedIn } = require('./helper');
 
 // Display list of all Users.
 exports.user_list = function (req, res) {
@@ -8,7 +8,7 @@ exports.user_list = function (req, res) {
         if (err) { console.log(err); }
         //Successful, so render
         //  res.send(userlist);
-          res.render('layout',{content:'ranking' , users:userlist});
+        res.render('layout', { content: 'user/ranking', users: userlist });
     });
 };
 
@@ -67,7 +67,7 @@ exports.user_create_post = function (req, res) {
 };
 
 exports.user_login_get = function (req, res) {
-    res.send('NOT IMPLEMENTED: User create GET');
+    res.render('layout', { content: 'user/login' });
 };
 
 // Handle User login on POST.
@@ -81,12 +81,17 @@ exports.user_login_post =
             res.json({ success: false, message: "Password was not given" })
             return;
         }
+
         passport.authenticate('local', function (err, user, info) {
             if (err) { return next(err); }
-            if (!user) { return res.redirect('/login'); }
+            if (!user) { return res.redirect('/users/login'); }
             req.logIn(user, function (err) {
                 if (err) { return next(err); }
-                return res.redirect(user.url);
+                var redirectTo = req.session.redirectTo || '/';
+                delete req.session.redirectTo;
+                // is authenticated ?
+                
+                return res.redirect(redirectTo);
             });
         })(req, res, next)
     };
@@ -97,7 +102,18 @@ exports.user_logout_post = function (req, res) {
 }
 
 
-
+exports.user_forgotPass_get = function (req, res) {
+    res.send('NOT IMPLEMENTED: User forgot pass GET');
+};
+exports.user_resetPass_get = function (req, res) {
+    res.send('NOT IMPLEMENTED: User reset pass GET');
+};
+exports.user_resetPass_post = function (req, res) {
+    res.send('NOT IMPLEMENTED: User reset pass post');
+};
+exports.user_delete_get = function (req, res) {
+    res.send('NOT IMPLEMENTED: User delete GET');
+};
 
 // Display User delete form on GET.
 exports.user_delete_get = function (req, res) {

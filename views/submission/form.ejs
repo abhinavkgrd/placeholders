@@ -1,9 +1,11 @@
-<%- include('partials/contest-header' , {contest:contest});  -%>
-<form class="form-group" action="submissions/submit" method="POST">
+<%- include('../contest/header');  -%>
+
+<form class="form-group" action="/submissions/submit" method="POST">
   <input type="hidden" name="cid" value="<%=contest._id%>">
   <div class="form-group">
     <label for="Problemselect">Problem Name</label>
-    <select class="form-control" id="Problemselect" name="pid">
+    <select class="form-control" id="Problemselect" name="pid" required>
+      <option value=""> Select Problem </option>
       <%contest.problems.forEach(function(problem){%>
       <option value="<%=problem._id%>"><%=problem.name%></option>
       <%})%>
