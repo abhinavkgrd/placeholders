@@ -28,9 +28,11 @@ exports.submission_listview = function (cid) {
     return query.exec();
 };
 exports.loggedIn = (req, res, next) => {
-    if (req.user) {
+    if (req.isAuthenticated()) {
+        res.locals.user = req.user;
         next();
     } else {
+        req.session.redirectTo = req.originalUrl ;
         res.redirect('/users/login');
     }
 };

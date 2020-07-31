@@ -2,10 +2,11 @@ var express = require('express');
 var router = express.Router();
 
 var contest_controller= require("../controllers/contestController");
-var submission_controller= require("../controllers/submissionController");
-
+const {loggedIn}  = require('../controllers/helper');
 
 router.get("/",contest_controller.contest_list);
+
+router.use(loggedIn);
 
 //create contest  with basic details
 router.get("/create",contest_controller.contest_create_get);

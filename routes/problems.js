@@ -3,12 +3,14 @@ var router = express.Router();
 
 
 var problem_controller= require("../controllers/problemController");
+const {loggedIn}  = require('../controllers/helper');
 
 
 // PROBLEM ROUTES
 
 router.get('/',problem_controller.problem_list);
 
+router.use(loggedIn);
 
 router.get('/create',problem_controller.problem_create_get);
 router.post('/create',problem_controller.problem_create_post);

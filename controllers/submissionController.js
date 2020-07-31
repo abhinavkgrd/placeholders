@@ -44,7 +44,7 @@ exports.submission_create_post = [
         createtext(file).then((codeid) => {
             var submission = {
                 problem: req.body.pid,
-                user: req.body.uid,
+                user: req.user,
                 code: codeid,
                 status: 'PENDING'
             };
