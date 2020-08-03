@@ -9,8 +9,6 @@ var fs = require("fs");
 var async = require("async");
 var axios = require('axios')
 
-
-
 // Display detail page for a specific Submission.
 exports.submission_detail = function (req, res) {
     Submission.findOne({ _id: req.params.sid }, (err, submission) => {
@@ -63,7 +61,7 @@ exports.submission_create_post = [
                         });
                     },
                     (callback) => {
-                        User.updateOne({ _id: req.body.uid }, { $push: { submissions: [submission._id] } }, function (err, user) {
+                        User.updateOne({ _id: req.user }, { $push: { submissions: [submission._id] } }, function (err, user) {
                             if (err)
                                 return callback(err);
                             callback(null);

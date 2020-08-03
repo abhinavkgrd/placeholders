@@ -5,7 +5,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var passport = require('./configs/passport');
 
-
 var problemsRouter = require('./routes/problems');
 var submissionsRouter = require('./routes/submissions');
 var usersRouter = require('./routes/users');
@@ -28,11 +27,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-// app.use('/img',express.static(path.join(__dirname, 'public/images')));
-
 
 // Authentication
-
 const expressSession = require('express-session')({
   secret: 'secret',
   resave: false,
@@ -41,12 +37,13 @@ const expressSession = require('express-session')({
 app.use(expressSession);
 app.use(passport.initialize());
 app.use(passport.session());
-
-
+app.use(function(req, res, next) {
+  res.locals.user = req.user;
+  next();
+});
 // ROUTES
-
 app.get('/', function (req, res) {
-  res.render('layout',{content:'index'});
+  res.render('layout', { content: 'index' });
 });
 
 app.use('/problems', problemsRouter);
