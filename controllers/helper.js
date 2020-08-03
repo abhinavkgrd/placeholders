@@ -1,6 +1,7 @@
 const Text = require("../models/text");
 const fs = require("fs");
 var Contest = require('../models/contest');
+var nodemailer = require('nodemailer');
 
 exports.createtext = async (file) => {
     var id = await Text.create({
@@ -29,10 +30,19 @@ exports.submission_listview = function (cid) {
 };
 exports.loggedIn = (req, res, next) => {
     if (req.isAuthenticated()) {
-        res.locals.user = req.user;
         next();
     } else {
         req.session.redirectTo = req.originalUrl ;
         res.redirect('/users/login');
     }
 };
+
+
+exports.mailer = nodemailer.createTransport({
+    host: "smtp.mailtrap.io",
+    port: 2525,
+    auth: {
+        user: 'f0c25afafb2d19',
+        pass: 'e8eac59a9f3d53'
+    }
+});

@@ -1,0 +1,124 @@
+<link rel="stylesheet" href="/stylesheets/profile.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<div class="container emp-profile">
+    <form method="post">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-img">
+                    <img src="/images/profile-pic.jpg" alt="" />
+                    <div class="file btn btn-lg btn-primary">
+                        Change Photo
+                        <input type="file" name="file" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="profile-head">
+                    <h5>
+                        <%=profile.display_name%>
+                    </h5>
+                    <p class="proile-rating">Rating : <span><%=profile.rating%></span></p>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                aria-controls="home" aria-selected="true">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                aria-controls="profile" aria-selected="false">Submissions</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <a class="profile-edit-btn" name="btnAddMore" href="<%=user.url%>/update"
+                    style="text-decoration: none;">Update profile</a>
+                <br>
+                <br>
+                <a href="#myModal" data-toggle="modal" style="text-decoration: none; color: red;">Delete profile</a>
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-md-8 offset-md-4">
+                    <div class="tab-content profile-tab" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>User Id</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><%=profile.username%></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Name</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><%=profile.display_name%></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Email</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><%=profile.email%></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <table class="table table-striped">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Time</th>
+                                        <th scope="col">User</th>
+                                        <th scope="col">Problem</th>
+                                        <th scope="col">Verdict</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% var i=1  ;%>
+                                    <%profile.submissions.forEach(function(submission){ %>
+                                    <tr>
+                                        <td><a href="<%=submission.url%>"> <%=submission.short_id%></a></td>
+                                        <td><%=submission.createdAt%></td>
+                                        <td><%=submission.user.username%></td>
+                                        <td><%=submission.problem.name%></td>
+                                        <td><%=submission.status%></td>
+
+                                    </tr>
+                                    <%});%>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </form>
+</div>
+
+<!-- Modal HTML -->
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header flex-column">
+                <div class="icon-box">
+                    <i class="material-icons">&#xE5CD;</i>
+                </div>
+                <h4 class="modal-title w-100">Are you sure?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Do you really want to delete Your account? This process cannot be undone.</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <form action="<%=user.url%>/delete" method="POST">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
