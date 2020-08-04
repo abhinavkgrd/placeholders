@@ -76,7 +76,6 @@ exports.user_login_post = function (req, res, next) {
 
     passport.authenticate('local', function (err, user, info) {
         if (err) { return next(err); }
-        console.log(info);
         if (!user) return res.render('layout', { content: 'info', info: info });
         req.logIn(user, function (err) {
             if (err) { return next(err); }

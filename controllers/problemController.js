@@ -1,32 +1,32 @@
 const Problem = require('../models/problem');
-const Submission = require('../models/submission');
 const upload = require("../configs/multer");
-const {createtext} = require("./helper");
+const { createtext } = require("./helper");
 // const { body,validationResult } = require('express-validator/check');
 // const { sanitizeBody } = require('express-validator/filter');
 var async = require("async");
+const { check } = require('express-validator');
 
 // Display list of all Problems.
 exports.problem_list = function (req, res) {
     Problem.find({}, 'name', function (err, problems_list) {
         if (err) { console.log(err); }
         //Successful, so render
-        res.send(problems_list);
+        res.render('layout', { content: 'problem/list', list: problems_list });
     });
 };
 
 // Display detail page for a specific Problem.
 exports.problem_detail = function (req, res, next) {
-    Problem.findOne({ _id: req.params.pid },(err,problem)=> {
-            if (err) { console.log(err); }
-            //Successful, so render
-            res.send(problem);
-        });
+    Problem.findOne({ _id: req.params.pid }, (err, problem) => {
+        if (err) { console.log(err); }
+        //Successful, so render
+        res.render('layout', { content: 'problem/details', problem: problem  ,contest:undefined });
+    });
 };
 
 // Display Problem create form on GET.
 exports.problem_create_get = function (req, res) {
-    res.render('problem-form');
+    res.render('layout', { content: 'problem/create'});
 };
 
 // Handle Problem create on POST.
@@ -35,7 +35,7 @@ exports.problem_create_post = [
         name: 'input_file', maxCount: 1
     }, {
         name: 'output_file', maxCount: 1
-    }]),
+    }]), [check('statement').escape()],
     function (req, res) {
         if (!req.files) {
             console.log('Please select an text to upload');
@@ -53,9 +53,9 @@ exports.problem_create_post = [
             }
             var problem = {
                 name: req.body.name,
-                statement: req.body.statement,
-                sample_test_case: {
-                    input: req.body.sin, output: req.body.sout
+                statement: req.body.statement.replace(/(\r\n|\n|\r)/gm, "\\n"),
+                sample_test: {
+                    input: req.body.sin.replace(/(\r\n|\n|\r)/gm, "\\n"), output: req.body.sout.replace(/(\r\n|\n|\r)/gm, "\\n")
                 },
                 test_case: test_case
             };

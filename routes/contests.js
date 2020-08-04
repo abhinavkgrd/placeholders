@@ -25,7 +25,7 @@ router.get('/:cid/problems/:pid/submissions',contest_controller.problem_contest_
 //add/update problems in the contest
 router.get("/:cid/problems/update",contest_controller.contest_problem_update_get);
 router.post("/:cid/problems/update",contest_controller.contest_problem_update_post);
-
+router.get('/:cid/problems/:pid/',contest_controller.problem_details_get);
 
 //user routes
 router.post("/:cid/register/",contest_controller.contest_user_register);

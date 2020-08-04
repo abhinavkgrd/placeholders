@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var problemSchema = new Schema({
   name: { type: String },
   statement: { type: String },
-  sample_test_case: { input: String, output: String },
+  sample_test: { input: String, output: String },
   test_case: {
     input: { type: Schema.Types.ObjectId, ref: 'Text' },
     output: { type: Schema.Types.ObjectId, ref: 'Text' }

@@ -1,0 +1,34 @@
+<h2>
+    Create Problems
+</h2>
+<form class="form-group" action="/problems/create" method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="name" class="col-md-3 control-label">Problem Name</label>
+        <div class="col">
+            <input type="text" class="form-control" name="name" placeholder="Problem Name">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="code">Problem Statement</label>
+        <textarea class="form-control" name="statement" id="code" rows="20"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="code">Example input</label>
+        <textarea class="form-control" name="sin" id="sin" rows="5"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="code">Example output</label>
+        <textarea class="form-control" name="sout" id="sout" rows="5"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="sourcefile">Upload Test input file</label>
+        <input type="file" class="form-control-file" id="input_file" name='input_file'>
+    </div>
+    <div class="form-group">
+        <label for="sourcefile">Upload Test output file</label>
+        <input type="file" class="form-control-file" id="output_file" name='output_file'>
+    </div>
+
+    <input type="submit" class="btn btn-primary" value="Submit" class="submitButton">
+    </textarea>
+</form>

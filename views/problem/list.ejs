@@ -1,0 +1,19 @@
+<h1>Problem List</h1>
+<a href="/problems/create" class="badge badge-success">Create New Contest</a>
+<hr>
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Code</th>
+            <th scope="col">Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% list.forEach(function(problem){ %>
+        <tr>
+            <td><a href="<%=problem.url%>"><%=problem._id %></a></td>
+            <td><%=problem.name %></td>
+        </tr>
+        <%});%>
+    </tbody>
+</table>

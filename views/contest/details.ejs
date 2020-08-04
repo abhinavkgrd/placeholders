@@ -13,7 +13,7 @@
         <%contest.problems.forEach(function(problem){ %>
             <tr>
                 <th scope="row"><%=i%></th>
-                <td><a href="<%=problem.url%>"> <%=problem.name%></a></td>
+                <td><a href="<%=contest.url%>/problems/<%=problem._id%>"> <%=problem.name%></a></td>
                 <td><a href="<%=contest.url%>/problems/<%=problem._id%>/submissions"> <%=subcnt[problem._id]%></td>
                 <td>50.23</td>
             </tr>

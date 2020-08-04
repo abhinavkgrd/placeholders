@@ -1,6 +1,8 @@
 var Contest = require('../models/contest');
+var Problem = require('../models/problem');
 var { submission_listview } = require("./helper");
 const upload = require("../configs/multer");
+var async = require('async');
 
 exports.contest_list = function (req, res) {
     Contest.find({}, function (err, contests) {
@@ -23,6 +25,22 @@ exports.contest_details = function (req, res) {
     });
 };
 
+exports.problem_details_get = function (req, res) {
+    async.parallel(
+        [(callback) => {
+            Contest.findById(req.params.cid)
+                .exec(callback);
+        },
+        (callback) => {
+            Problem.findById(req.params.pid)
+                .exec(callback);
+        }], function (err, result) {
+            if (err) {
+                console.log(err);
+            }
+            res.render('layout', { content: 'problem/details', contest: result[0], problem: result[1] });
+        });
+}
 exports.leaderboard = function (req, res) {
     Contest.findOne({ _id: req.params.cid })
         .populate('users').exec()
