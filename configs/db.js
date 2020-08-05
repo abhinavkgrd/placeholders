@@ -5,7 +5,7 @@ var mongoDB = 'mongodb+srv://dbuser:strongPass@cluster0-jn6qi.mongodb.net/Codefo
 var DBurl_local ='mongodb://localhost:27017/placeholders';
 const InitiateMongoServer = async () => {
     try {
-        await mongoose.connect(DBurl_local, {
+        await mongoose.connect(mongoDB, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });

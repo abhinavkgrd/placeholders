@@ -1,0 +1,43 @@
+.problem .header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+main {
+  padding-bottom: 500px;
+}
+
+.problem .sample-tests .input,
+.problem .sample-tests .output {
+  border: 1px solid #888;
+}
+.problem .sample-tests .title {
+  padding: 0.25em;
+  border-bottom: 1px solid #888;
+  text-transform: lowercase;
+  font-weight: bold;
+}
+
+.problem .sample-tests pre {
+    line-height: 1.25em;
+    padding: 0.25em;
+    margin: 0;
+    background-color: #efefef;
+}
+.problem {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    grid-gap: 20px;
+}
+
+.roundbox {
+    border: 1px solid rgb(185, 185, 185);
+    position: relative;
+}
+.roundbox .titled {
+    padding: 0 0 0.3em 0.5em;
+    border-bottom: 1px solid rgb(185, 185, 185);
+}
+.section-title , .title{
+  font-weight: bold;
+}
