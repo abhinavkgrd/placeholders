@@ -1,11 +1,13 @@
-
 var mongoose = require('mongoose');
+require('dotenv').config();
 
-var mongoDB = 'mongodb+srv://dbuser:strongPass@cluster0-jn6qi.mongodb.net/Codeforces_clone_db?retryWrites=true&w=majority';
+var DBurl_cloud=process.env.mongoDB;
 var DBurl_local ='mongodb://localhost:27017/placeholders';
+var DBuri=DBurl_cloud||DBurl_local;
+
 const InitiateMongoServer = async () => {
     try {
-        await mongoose.connect(mongoDB, {
+        await mongoose.connect(DBuri, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });

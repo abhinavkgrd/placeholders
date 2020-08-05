@@ -4,18 +4,22 @@ const Contest = require('../models/contest');
 const User = require('../models/user');
 const upload = require("../configs/multer");
 const ips = require("../configs/IP");
-const {createtext} = require("./helper");
+const { createtext } = require("./helper");
 var fs = require("fs");
 var async = require("async");
 var axios = require('axios')
 
 // Display detail page for a specific Submission.
 exports.submission_detail = function (req, res) {
-    Submission.findOne({ _id: req.params.sid }, (err, submission) => {
-        if (err) { console.log(err); }
-        //Successful, so render
-        res.send(submission);
-    });
+    Submission.findOne({ _id: req.params.sid })
+        .populate([{ path: 'problem', select: 'name' }
+            , { path: 'user', select: 'username' }
+            , "code"])
+        .exec().then((submission) => {
+            // submission.code = submission.code.data.data.toString('utf8');
+            console.log(submission.code);
+            res.send(submission);
+        });
 };
 
 // Handle Submission create on POST.
@@ -106,3 +110,6 @@ function judge_solution(codeid, pid, sid) {
             });
     });
 }
+
+
+

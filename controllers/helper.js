@@ -2,6 +2,7 @@ const Text = require("../models/text");
 const fs = require("fs");
 var Contest = require('../models/contest');
 var nodemailer = require('nodemailer');
+require('dotenv').config();
 
 exports.createtext = async (file) => {
     var id = await Text.create({
@@ -42,7 +43,7 @@ exports.mailer = nodemailer.createTransport({
     host: "smtp.mailtrap.io",
     port: 2525,
     auth: {
-        user: 'f0c25afafb2d19',
-        pass: 'e8eac59a9f3d53'
+        user: process.env.smtpuser,
+        pass: process.env.smtppass
     }
 });
