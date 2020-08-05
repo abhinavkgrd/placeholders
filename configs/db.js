@@ -3,11 +3,10 @@ require('dotenv').config();
 
 var DBurl_cloud=process.env.mongoDB;
 var DBurl_local ='mongodb://localhost:27017/placeholders';
-var DBuri=DBurl_cloud||DBurl_local;
 
 const InitiateMongoServer = async () => {
     try {
-        await mongoose.connect(DBuri, {
+        await mongoose.connect(DBurl_local, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
