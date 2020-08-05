@@ -1,16 +1,3 @@
-<%- include('../contest/header');  -%>
-
-<script>
-    function htmlDecode(input) {
-        var e = document.createElement('textarea');
-        e.innerHTML = input;
-        // handle case of empty input
-        return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-    }
-    $(function () {
-        $('.code').html(htmlDecode("<%-submission.code%>"));
-    });
-</script>
 <h3>Submissions</h3>
 <hr>
 <table class="table table-striped">
@@ -31,13 +18,27 @@
             <td><%=submission.problem.name%></td>
             <td><%=submission.status%></td>
             <td><%=submission.createdAt%></td>
-            <td><%=submission.updatedAt%></td>
+            <%if(submission.status=="PENDING"){%>
+            <td> - </td>
+            <%}else{%>
+                <td><%=submission.updatedAt%></td>
+            <%}%>
         </tr>
     </tbody>
 </table>
 <div class="source">
     <div class="title">Source</div>
-    <div class="code"></div>
+    <pre class="code">
+        <%=submission.codestr%>
+    </pre>
 </div>
-
-
+<style>
+    .source{
+        border:2px solid black;
+    }
+    .title{
+        font-weight: bold;
+        text-align: center;
+        border-bottom:2px solid black ;
+    }
+</style>

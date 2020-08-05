@@ -16,9 +16,8 @@ exports.submission_detail = function (req, res) {
             , { path: 'user', select: 'username' }
             , "code"])
         .exec().then((submission) => {
-            // submission.code = submission.code.data.data.toString('utf8');
-            console.log(submission.code);
-            res.send(submission);
+            submission.codestr=submission.code.data.toString('utf8');
+            res.render('layout',{content:'submission/details',submission:submission});
         });
 };
 
@@ -110,6 +109,3 @@ function judge_solution(codeid, pid, sid) {
             });
     });
 }
-
-
-
