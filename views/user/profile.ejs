@@ -30,6 +30,7 @@
                     </ul>
                 </div>
             </div>
+            <%if(user._id==profile._id){%>
             <div class="col-md-2">
                 <a class="profile-edit-btn" name="btnAddMore" href="<%=user.url%>/update"
                     style="text-decoration: none;">Update profile</a>
@@ -37,6 +38,7 @@
                 <br>
                 <a href="#myModal" data-toggle="modal" style="text-decoration: none; color: red;">Delete profile</a>
             </div>
+            <%}%>
         </div>
             <div class="row">
                 <div class="col-md-8 offset-md-4">
